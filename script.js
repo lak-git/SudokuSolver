@@ -55,6 +55,7 @@ for (let i = 1; i <= 9; i++) {
     numberPad.appendChild(btn);
 }
 
+
 // Add clear button functionality
 clearBtn.addEventListener('click', () => {
     // Clear puzzle data
@@ -69,27 +70,15 @@ clearBtn.addEventListener('click', () => {
     });
     
     selectedCell = null;
+    solveBtn.textContent = 'Solve Sudoku';
 });
+
 
 // Solve button functionality
 solveBtn.addEventListener('click', () => {
     // Simple animation to show solving
     solveBtn.textContent = 'Solving...';
     solveBtn.disabled = true;
-    
-    // In a real implementation, this would call a solving algorithm
-    // For demo purposes, just fill with a sample solution
-    const sampleSolution = [
-        [5, 3, 4, 6, 7, 8, 9, 1, 2],
-        [6, 7, 2, 1, 9, 5, 3, 4, 8],
-        [1, 9, 8, 3, 4, 2, 5, 6, 7],
-        [8, 5, 9, 7, 6, 1, 4, 2, 3],
-        [4, 2, 6, 8, 5, 3, 7, 9, 1],
-        [7, 1, 3, 9, 2, 4, 8, 5, 6],
-        [9, 6, 1, 5, 3, 7, 2, 8, 4],
-        [2, 8, 7, 4, 1, 9, 6, 3, 5],
-        [3, 4, 5, 2, 8, 6, 1, 7, 9]
-    ];
     
     // Update the UI with the solution
     const cells = document.querySelectorAll('.cell');
@@ -100,15 +89,72 @@ solveBtn.addEventListener('click', () => {
             puzzle[row][col] = parseInt(cell.textContent);
         }
     });
-    console.log(puzzle);
-
-    cells.forEach(cell => {
-        const row = parseInt(cell.dataset.row);
-        const col = parseInt(cell.dataset.col);
-        cell.textContent = sampleSolution[row][col];
-        cell.classList.add('fixed');
-    });
     
-    solveBtn.textContent = 'Solve Sudoku';
+    if (backtrackSolve(puzzle)) {
+        cells.forEach(cell => {
+            const row = parseInt(cell.dataset.row);
+            const col = parseInt(cell.dataset.col);
+            cell.textContent = puzzle[row][col];
+            cell.classList.add('fixed');
+        });
+        solveBtn.textContent = 'Solve Sudoku';        
+    }
+    else{
+        solveBtn.textContent = 'No Solution!';
+    }
+
     solveBtn.disabled = false;
 });
+function findEmpty(board) {
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            if (board[i][j] == 0) {
+                return [i, j];
+            }
+        }
+    }
+}
+function isValid(board, row, col, number) {
+    for (let i = 0; i < 9; i++) {
+        if (board[i][col] == number) {
+            return false;
+        }
+    }
+    for (let j = 0; j < 9; j++) {
+        if (board[row][j] == number) {
+            return false;
+        }
+    }
+
+    let startRow = row - row % 3;
+    let startCol = col - col % 3;
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (board[startRow +i][startCol + j] == number) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+function backtrackSolve(board) {
+    let position = findEmpty(board);
+    if (position === undefined) {
+        return true;
+    }
+
+    let row = position[0];
+    let col = position[1];
+    for (let num = 1; num < 10; num++) {
+        if (isValid(board, row, col, num)) {
+            board[row][col] = num;
+            if (backtrackSolve(board)) {
+                return true;
+            }
+            board[row][col] = 0;
+        }
+    }
+    
+    return false;
+}
