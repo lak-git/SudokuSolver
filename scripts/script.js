@@ -5,7 +5,6 @@ const clearBtn = document.getElementById('clear-btn');
 
 let selectedCell = null;
 let puzzle = Array(9).fill().map(() => Array(9).fill(0));
-let originalPuzzle = Array(9).fill().map(() => Array(9).fill(0));
 
 // Create Sudoku board
 for (let row = 0; row < 9; row++) {
