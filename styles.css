@@ -1,0 +1,255 @@
+:root{
+    --bg : #141414;
+    --grid-bg: #bdbdbd;
+    --button: #2ecc71;
+    --button-clicked: #249c56;
+    --button-numpad: rgba(46, 204, 117, 0.65);
+    --button-numpad-clicked: rgb(36, 156, 86, 0.65);
+    --button-clear: #ff2b2b;
+    --button-clear-clicked: #e02626;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: white;
+}
+
+.container {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.game-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.sudoku-section {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: white;
+}
+
+/* Sudoku Board Styles */
+.sudoku-board {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 0;
+    width: 400px;
+    height: 400px;
+    border: 3px solid #333;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.cell:hover {
+    background-color: #f0f8ff;
+}
+
+.cell.selected {
+    background-color: #b0e0e6;
+}
+
+.cell.fixed {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    color: #1e90ff;
+}
+
+/* Thicker borders for 3x3 boxes */
+.cell:nth-child(3n) {
+    border-right: 2px solid #333;
+}
+
+.cell:nth-child(9n) {
+    border-right: 1px solid #aaa;
+}
+
+.cell:nth-child(n+19):nth-child(-n+27),
+.cell:nth-child(n+46):nth-child(-n+54) {
+    border-bottom: 2px solid #333;
+}
+
+/* Control Panel Styles */
+.control-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    min-width: 300px;
+}
+
+.number-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.num-btn {
+    height: 65px;
+    font-size: 28px;
+    font-weight: bold;
+    background: var(--button-numpad);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.num-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background: var(--button-numpad-clicked);
+}
+
+.num-btn:active {
+    transform: translateY(1px);
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn {
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.solve-btn {
+    background: var(--button);
+    color: white;
+}
+
+.solve-btn:hover {
+    background: var(--button-clicked);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.clear-btn {
+    background: var(--button-clear);
+    color: white;
+}
+
+.clear-btn:hover {
+    background: var(--button-clear-clicked);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.instructions {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.instructions h2 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.instructions ul {
+    padding-left: 20px;
+}
+
+.instructions li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .sudoku-board {
+        width: 320px;
+        height: 320px;
+    }
+    
+    .cell {
+        font-size: 20px;
+    }
+}
