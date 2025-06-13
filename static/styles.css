@@ -206,38 +206,6 @@ h1 {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.instructions {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    padding: 25px;
-    margin-top: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.instructions h2 {
-    color: #ffd700;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.instructions ul {
-    padding-left: 20px;
-}
-
-.instructions li {
-    margin-bottom: 10px;
-    line-height: 1.6;
-}
-
-footer {
-    text-align: center;
-    margin-top: 30px;
-    padding: 20px;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
-}
-
 @media (max-width: 768px) {
     .game-container {
         flex-direction: column;
